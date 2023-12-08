@@ -8,3 +8,28 @@
 
   <%= button_to "Destroy this room", @room, method: :delete %>
 </div>
+
+<h2>Messages</h2>
+<% if @room.messages.any? %>
+  <% @room.messages.order(created_at: :desc).each do |message| %>
+    <div>
+      <strong><%= message.user.name %>:</strong>
+      <p><%= message.content %></p>
+      <p><%= message.created_at %></p>
+    </div>
+  <% end %>
+<% else %>
+  <section>No messages. When someone sends one, it will appear here</section>
+<% end %>
+
+<h2>New Message</h2>
+<%= form_with model: [ @room, Message.new ], local: true do |form| %>
+  <div>
+    <%= form.label :content %>
+    <%= form.text_area :content %>
+  </div>
+
+  <div>
+    <%= form.submit %>
+  </div>
+<% end %>
