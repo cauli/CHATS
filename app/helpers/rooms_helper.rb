@@ -16,7 +16,12 @@ module RoomsHelper
         end
     end
 
-    def tailwind_header_class()
-        "font-light text-4xl text-theme-grey-50 underline decoration-theme-aqua decoration-wavy italic"
+    def tailwind_header_class(symbol)
+        case symbol
+            when :dark
+                "font-light text-4xl text-theme-grey-50 underline decoration-theme-aqua decoration-wavy italic"
+            when :light
+                "font-thin text-4xl text-theme-grey-50 decoration-theme-white italic"
+        end
     end
 end

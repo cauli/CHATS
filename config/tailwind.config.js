@@ -27,7 +27,8 @@ module.exports = {
             800: '#1c191e',
           },
           aqua: '#c2e6e8',
-          orange: '#e88936',
+          greeny: '#cce9de',
+          turquoise: '#6dc6aa'
         },
       }
     },

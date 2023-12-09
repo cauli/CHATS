@@ -1,16 +1,20 @@
-<div id="<%= dom_id room %>">
-  <p>
-    <strong>Title:</strong>
-    <%= room.title %>
-  </p>
 
-  <strong>Users:</strong>
-
-  <div>  
-    <%=format_users_of_room(room.users)  %>
-  </div>
-
-  <div>
-    Current user: <%= @current_user.name %>
-    </div>
+<div>
+  <%= link_to "← Back to rooms", rooms_path, class: '' %>
 </div>
+<div id="<%= dom_id room %>">
+  <section id="header" class="flex flex-col">
+    <div class="flex flex-row items-center w-full">
+      <h1 class="<%= tailwind_header_class(:light) %>"><%= room.title %></h1>
+      <div>
+        <button class="text-theme-grey-600 font-bold mt-1 text-2xl px-3" onclick="toggleOptions()">⫶</button>
+        <div id="options" class="fixed bg-white outline divide-y divide-theme-greeny outline-theme-greeny rounded-md shadow-sm" style="display: none;">
+          <%= link_to "Edit this room", edit_room_path(@room), class: "text-theme-grey-500 text-sm py-1 px-2 hover:bg-theme-grey-100 block" %>
+          <%= button_to "Destroy this room", @room, method: :delete, class: "text-red-500 text-sm py-1 px-2 hover:bg-theme-grey-100 block" %>
+        </div>
+      </div>
+    </div>
+    <p class="mt-4 text-theme-grey-500 w-1/2 text-sm">Users in the room: <%=format_users_of_room(room.users)  %></p>
+  </section>
+</div>
+

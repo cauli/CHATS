@@ -1,36 +1,48 @@
-<p style="color: green"><%= notice %></p>
+<% if notice %>
+  <div class="fixed bottom-4 right-4 bg-white shadow-lg p-4 rounded-lg">
+    <%= notice %>
+  </div>
+<% end %>
 
 <%= render @room %>
 
-<div>
-  <%= link_to "Edit this room", edit_room_path(@room) %> |
-  <%= link_to "Back to rooms", rooms_path %>
-
-  <%= button_to "Destroy this room", @room, method: :delete %>
-</div>
-
-<h2>Messages</h2>
-<% if @room.messages.any? %>
-  <% @room.messages.order(created_at: :desc).each do |message| %>
-    <div className="flex flex-col text-3xl">
-      <strong><%= message.user.name %>:</strong>
-      <p><%= message.content %></p>
-      <p><%= message.created_at %></p>
-    </div>
+<section class="bg-white flex flex-col h-screen">
+  <% if @room.messages.any? %>
+    <% previous_user_name = nil %>
+    <% @room.messages.order(created_at: :asc).each do |message| %>
+      <div className="flex flex-col text-sm">
+        <% if message.user.name != previous_user_name %>
+          <strong><%= message.user.name %></strong>
+        <% end %>
+        <p><%= message.content %></p>
+        <p class="text-xs italic"><%= message.created_at.strftime("%B %d %Y, %l:%M%P") %></p>
+      </div>
+      <% previous_user_name = message.user.name %>
+    <% end %>
+  <% else %>
+    <section class="flex-grow overflow-auto">No messages. When someone sends one, it will appear here</section>
   <% end %>
-<% else %>
-  <section>No messages. When someone sends one, it will appear here</section>
-<% end %>
+</section>
 
-<h2>New Message</h2>
 <%= form_with model: [ @room, Message.new ], local: true do |form| %>
-  <div>
-    <%= form.label :content %>
-    <%= form.text_area :content %>
-  </div>
+  <div class="flex flex-row fixed bottom-0">
+    <div class="mb-4 flex-grow">
+      <%= form.text_field :content, class: "shadow appearance-none border-0 rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline", placeholder: "Write a message..." %>
+    </div>
 
-  <div>
-    <%= form.submit %>
+    <div class="py-2 px-3 rounded">
+      <%= form.submit "Send", class: "" %>
+    </div>
   </div>
 <% end %>
 
+<script>
+  function toggleOptions() {
+    var options = document.getElementById("options");
+    if (options.style.display === "none") {
+      options.style.display = "block";
+    } else {
+      options.style.display = "none";
+    }
+  }
+</script>

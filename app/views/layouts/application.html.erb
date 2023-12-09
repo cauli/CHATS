@@ -11,7 +11,11 @@
     <%= javascript_importmap_tags %>
   </head>
 
-  <body class="bg-theme-grey-100 w-full h-full">
+  <% if params[:controller] === "rooms" && params[:action] === "show" %>
+    <body class="bg-theme-greeny w-full h-full">
+  <% else %>
+    <body class="bg-theme-grey-100 w-full h-full">
+  <% end %>
     <main class="container mx-auto mt-28 px-5 flex flex-col">
       <%= yield %>
     </main>
