@@ -25,12 +25,14 @@ class RoomsController < ApplicationController
   def create
     @room = Room.new(room_params)
 
-    # automatically add user to room
-    @room_user = RoomUser.new(room: @room, user: current_user)
-    @room_user.save!
-
     respond_to do |format|
-      if @room.save
+      if @room.valid?
+        ActiveRecord::Base.transaction do
+          @room.save!
+          @room_user = RoomUser.new(room: @room, user: current_user)
+          @room_user.save!
+        end
+    
         format.html { redirect_to room_url(@room), notice: "Room was successfully created." }
         format.json { render :show, status: :created, location: @room }
       else

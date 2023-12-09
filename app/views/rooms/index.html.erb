@@ -1,8 +1,12 @@
-<p style="color: green"><%= notice %></p>
+<% if notice %>
+  <div class="fixed bottom-4 right-4 bg-white shadow-lg p-4 rounded-lg">
+    <%= notice %>
+  </div>
+<% end %>
 
 <section id="header" class="flex flex-col">
   <div class="flex flex-row items-center justify-between w-full">
-    <h1 class="font-bold text-4xl text-theme-grey-50 underline underline-offset-1 decoration-theme-aqua decoration-wavy italic">My rooms</h1>
+    <h1 class="<%= tailwind_header_class %>">My rooms</h1>
     <%= link_to "Create new room", new_room_path, class: "rounded-xl inline-block font-medium italic px-4 py-2 border-theme-aqua border-2 text-theme-grey-700 rounded hover:bg-theme-aqua" %>
   </div>
   <p class="mt-4 text-theme-grey-500 w-1/2 text-sm">Rooms are <span class="italic">public and anyone can join them</span>. This text is here just to show a bit more interesting layout. Don't mind me.</p>

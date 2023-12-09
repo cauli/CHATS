@@ -15,4 +15,8 @@ module RoomsHelper
             user_names.join(', ')
         end
     end
+
+    def tailwind_header_class()
+        "font-light text-4xl text-theme-grey-50 underline decoration-theme-aqua decoration-wavy italic"
+    end
 end

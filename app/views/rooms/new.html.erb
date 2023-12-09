@@ -1,9 +1,19 @@
-<h1>New room</h1>
-
-<%= render "form", room: @room %>
-
-<br>
-
 <div>
-  <%= link_to "Back to rooms", rooms_path %>
+  <%= link_to "← Back to rooms", rooms_path %>
 </div>
+
+<% if notice %>
+  <div class="fixed bottom-4 right-4 bg-white shadow-lg p-4 rounded-lg">
+    <%= notice %>
+  </div>
+<% end %>
+
+<section id="header" class="flex flex-col">
+  <div class="flex flex-row items-center justify-between w-full">
+    <h1 class="<%= tailwind_header_class %>">Create new room?</h1>
+  </div>  
+</section>
+
+<section id="create-room" class="flex flex-row mt-9 items-start justify-center">
+  <%= render "form", room: @room %>
+</section>
