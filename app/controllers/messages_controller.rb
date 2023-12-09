@@ -1,16 +1,27 @@
 class MessagesController < ApplicationController
+    before_action :set_room
+
     def create
         @message = Message.new(message_params)
         @message.user = current_user
         @message.room = @room
-        if @message.save
-            redirect_to room_url(@room)
-        else
-            render :new
+        
+        respond_to do |format|
+            if @message.save
+                format.html { redirect_to room_url(@room), notice: "Message was successfully created." }
+                format.json { render :show, status: :created, location: @room }
+            else
+                format.html { render :new, status: :unprocessable_entity }
+                format.json { render json: @message.errors, status: :unprocessable_entity }
+            end
         end
     end
 
     private
+
+    def set_room
+        @room = Room.find(params[:room_id])
+    end
 
     def message_params
         params.require(:message).permit(:content)

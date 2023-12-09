@@ -8,6 +8,7 @@ class RoomsController < ApplicationController
 
   # GET /rooms/1 or /rooms/1.json
   def show
+    @current_user = current_user
   end
 
   # GET /rooms/new
@@ -22,6 +23,10 @@ class RoomsController < ApplicationController
   # POST /rooms or /rooms.json
   def create
     @room = Room.new(room_params)
+
+    # automatically add user to room
+    @room_user = RoomUser.new(room: @room, user: current_user)
+    @room_user.save!
 
     respond_to do |format|
       if @room.save

@@ -4,4 +4,13 @@
     <%= room.title %>
   </p>
 
+  <strong>Users:</strong>
+
+  <div>  
+    <%=format_users_of_room(room.users)  %>
+  </div>
+
+  <div>
+    Current user: <%= @current_user.name %>
+    </div>
 </div>
