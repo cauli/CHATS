@@ -12,7 +12,7 @@
 <h2>Messages</h2>
 <% if @room.messages.any? %>
   <% @room.messages.order(created_at: :desc).each do |message| %>
-    <div>
+    <div className="flex flex-col text-3xl">
       <strong><%= message.user.name %>:</strong>
       <p><%= message.content %></p>
       <p><%= message.created_at %></p>

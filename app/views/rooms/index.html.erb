@@ -1,14 +1,15 @@
 <p style="color: green"><%= notice %></p>
 
-<h1>Rooms</h1>
+<section id="header" class="flex flex-col">
+  <div class="flex flex-row items-center justify-between w-full">
+    <h1 class="font-bold text-4xl text-theme-grey-50 underline underline-offset-1 decoration-theme-aqua decoration-wavy italic">My rooms</h1>
+    <%= link_to "Create new room", new_room_path, class: "rounded-xl inline-block font-medium italic px-4 py-2 border-theme-aqua border-2 text-theme-grey-700 rounded hover:bg-theme-aqua" %>
+  </div>
+  <p class="mt-4 text-theme-grey-500 w-1/2 text-sm">Rooms are <span class="italic">public and anyone can join them</span>. This text is here just to show a bit more interesting layout. Don't mind me.</p>
+</section>
 
-<div id="rooms">
+<section id="rooms" class="flex flex-row mt-9 items-start justify-center">
   <% @rooms.each do |room| %>
-    <%= render room %>
-    <p>
-      <%= link_to "Show this room", room %>
-    </p>
+    <%= link_to room.title, room, class: "rounded-2xl transition-all duration-75 bg-white ease-in aspect-4 mx-1 font-medium min-w-[64px] px-2 py-4 py-2 text-center hover:bg-[#CCE9DE] shadow-[#CCE9DE] hover:outline-0 shadow-sm text-theme-grey-500 p-2 mb-2"  %>
   <% end %>
-</div>
-
-<%= link_to "New room", new_room_path %>
+</section>

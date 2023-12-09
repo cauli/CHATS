@@ -3,6 +3,7 @@ class RoomsController < ApplicationController
 
   # GET /rooms or /rooms.json
   def index
+    @current_user = current_user
     @rooms = Room.all
   end
 
