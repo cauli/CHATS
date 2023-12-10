@@ -1,5 +1,6 @@
 class RoomsController < ApplicationController
   before_action :set_room, only: %i[ show edit update destroy ]
+  before_action :require_user
 
   # GET /rooms or /rooms.json
   def index
@@ -44,6 +45,7 @@ class RoomsController < ApplicationController
 
   # PATCH/PUT /rooms/1 or /rooms/1.json
   def update
+    # TODO should only allow if it's the owner of the room
     respond_to do |format|
       if @room.update(room_params)
         format.html { redirect_to room_url(@room), notice: "Room was successfully updated." }
@@ -57,6 +59,7 @@ class RoomsController < ApplicationController
 
   # DELETE /rooms/1 or /rooms/1.json
   def destroy
+    # TODO should only allow if it's the owner of the room
     @room.destroy!
 
     respond_to do |format|

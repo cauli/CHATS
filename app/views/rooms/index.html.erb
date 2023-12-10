@@ -5,7 +5,9 @@
 <% end %>
 
 <section id="header" class="flex flex-col mt-24">
+
   <div class="flex flex-row items-center justify-between w-full">
+    
     <h1 class="<%= tailwind_header_class(:dark) %>">My rooms</h1>
     <%= link_to "Create new room", new_room_path, class: "rounded-xl inline-block font-medium italic px-4 py-2 border-theme-aqua border-2 text-theme-grey-700 rounded hover:bg-theme-aqua" %>
   </div>
@@ -17,3 +19,8 @@
     <%= link_to room.title, room, class: "rounded-2xl transition-all duration-75 bg-white ease-in aspect-4 mx-1 font-medium min-w-[64px] px-2 py-4 py-2 text-center hover:bg-theme-greeny shadow-greeny hover:outline-0 shadow-sm text-theme-grey-500 p-2 mb-2"  %>
   <% end %>
 </section>
+
+
+<div class="fixed bottom-4 left-4">
+  <%= link_to "Sign out?", destroy_session_path %>
+</div>

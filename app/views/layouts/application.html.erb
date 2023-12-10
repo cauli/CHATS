@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
   <head>
-    <title>Chat</title>
+    <title>C H A T S</title>
     <meta name="viewport" content="width=device-width,initial-scale=1">
     <%= csrf_meta_tags %>
     <%= csp_meta_tag %>
@@ -12,9 +12,9 @@
   </head>
 
   <% if params[:controller] === "rooms" && params[:action] === "show" %>
-    <body class="bg-theme-greeny w-full h-full">
+    <body class="bg-theme-greeny w-full h-full overflow-hidden">
   <% else %>
-    <body class="bg-theme-grey-100 w-full h-full">
+    <body class="bg-theme-grey-100 w-full h-full overflow-hidden">
   <% end %>
     <main class="container mx-auto px-5 flex flex-col">
       <%= yield %>

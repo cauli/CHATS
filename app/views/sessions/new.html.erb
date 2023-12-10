@@ -1,0 +1,15 @@
+<section id="header" class="flex flex-col mt-24">
+  <%= random_wavy_decorations(20) %>
+
+  <div class="flex flex-col items-center justify-between w-full">
+    <h1 class="<%= tailwind_header_class(:dark) %>">C H A T S</h1>
+    <h2 class="mt-2 font-light text-2xl text-theme-grey-50 underline decoration-theme-aqua decoration-wavy italic">Please choose a name</h2>
+  </div>
+
+  <section id="create-room" class="flex flex-row mt-9 items-start justify-center">
+    <%= form_with url: login_path, local: true do |form| %>
+        <%= form.text_field :name, autofocus: true, class: "appearance-none border-0 rounded-full border-2 border-theme-grey-300 w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:border-theme-greeny focus:border-3", placeholder: "Your name here" %>
+        <%= form.submit "Log In", class: "cursor-pointer mt-2 rounded-xl block w-full font-medium italic px-4 py-2 border-theme-aqua border-2 text-theme-grey-700 rounded hover:bg-theme-aqua" %>
+    <% end %>
+  </section>
+</section>
