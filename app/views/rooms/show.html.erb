@@ -5,13 +5,13 @@
 
   <section class="bg-white flex flex-col h-screen px-6 flex-grow border-l-2 border-theme-grey-300 overflow-hidden">
     <%= random_wavy_decorations(20) %>
-    <section class="flex flex-col flex-grow"  style="height: calc(100% - 50px);">
+    <section class="flex flex-col flex-grow"  style="height: calc(100% - 70px);">
       <% if @room.messages.any? %>
         <section  id="messages" class="flex-grow overflow-y-auto overflow-x-hidden my-3">
           <% previous_user_name = nil %>
           <% @room.messages.order(created_at: :asc).each do |message| %>
             <% if message.user.name != previous_user_name %>
-              <p class="text-xs <%= message.user.name == current_user.name ? 'text-right text-theme-turquoise justify-end' : 'text-theme-grey-400 justify-end w-full' %>  mx-2 mb-0.5"><%= message.user.name %></p>
+              <p class="mt-2 text-xs <%= message.user.name == current_user.name ? 'text-right text-theme-turquoise justify-end' : 'text-theme-grey-400 justify-end w-full' %>  mx-2 mb-0.5"><%= message.user.name %></p>
             <% end %>
             <div class="<%= message.user.name == current_user.name ? 'text-right justify-end items-end' : 'text-left items-start justify-start' %> flex flex-col text-xs">
               <div class="<%= message.user.name == current_user.name ? 'bg-theme-greeny' : 'bg-theme-grey-200' %> my-0.5 rounded-full w-auto px-3 py-2" >
@@ -82,5 +82,4 @@
     var messages = document.querySelector('#messages');
     observer.observe(messages, { childList: true });
   });
-
 </script>
