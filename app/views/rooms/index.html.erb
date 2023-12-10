@@ -18,6 +18,10 @@
   <% @rooms.each do |room| %>
     <%= link_to room.title, room, class: "rounded-2xl transition-all duration-75 bg-white ease-in aspect-4 mx-1 font-medium min-w-[64px] px-2 py-4 py-2 text-center hover:bg-theme-greeny shadow-greeny hover:outline-0 shadow-sm text-theme-grey-500 p-2 mb-2"  %>
   <% end %>
+
+  <% if @rooms.empty? %>
+    <p class="text-theme-grey-500 text-center italic">No rooms yet. <%= link_to "Create one", new_room_path, class: "rounded-md px-2 py-1 inline-block font-medium italic border-2 border-theme-aqua text-theme-grey-700" %>?</p>
+  <% end %>
 </section>
 
 
