@@ -1,6 +1,6 @@
 Rails.application.routes.draw do
   resources :messages
-  resources :room_users
+  resources :room_users, only: [:create]
   resources :users
   resources :rooms do
     resources :messages, only: [:create]
@@ -14,8 +14,8 @@ Rails.application.routes.draw do
   # Authentiation routes
   get 'login', to: 'sessions#new'
   post 'login', to: 'sessions#create'
-  get 'logout', to: 'sessions#destroy', as: :destroy_session # this should be a delete request to avoid CSRF attacks, but I couldn't get it to work using `<%= link_to 'Logout', destroy_session_path, method: :delete %>`
-  
+  delete 'logout', to: 'sessions#destroy', as: :destroy_session
+
   # Defines the root path route ("/")
   root "rooms#index"
 end

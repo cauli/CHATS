@@ -3,60 +3,67 @@
     <%= render @room %>
   </div>
 
-  <section class="bg-white flex flex-col h-screen px-6 flex-grow border-l-2 border-theme-grey-300 overflow-hidden">
-    <%= random_wavy_decorations(20) %>
-    <section class="flex flex-col flex-grow"  style="height: calc(100% - 70px);">
-      <% if @room.messages.any? %>
-        <section  id="messages" class="flex-grow overflow-y-auto overflow-x-hidden my-3">
-          <% previous_user_name = nil %>
-          <% @room.messages.order(created_at: :asc).each do |message| %>
-            <% if message.user.name != previous_user_name %>
-              <p class="mt-2 text-xs <%= message.user.name == current_user.name ? 'text-right text-theme-turquoise justify-end' : 'text-theme-grey-400 justify-end w-full' %>  mx-2 mb-0.5"><%= message.user.name %></p>
-            <% end %>
-            <div class="<%= message.user.name == current_user.name ? 'text-right justify-end items-end' : 'text-left items-start justify-start' %> flex flex-col text-xs">
-              <div class="<%= message.user.name == current_user.name ? 'bg-theme-greeny' : 'bg-theme-grey-200' %> my-0.5 rounded-full w-auto px-3 py-2" >
-                <span><%= message.content %></span>
+  <% if @needs_to_join %>
+    <section class="flex flex-col h-screen px-6 flex-grow justify-center">
+      <%= link_to 'Join Room', room_users_path(room_id: @room.id), data: { turbo_method: "post" }, class: "text-center rounded-xl inline-block font-medium italic px-4 py-2 border-white border-2 text-theme-grey-700 rounded hover:bg-theme-aqua"  %>
+    </section>
+  <% else %>
+    <section class="bg-white flex flex-col h-screen px-6 flex-grow border-l-2 border-theme-grey-300 overflow-hidden">
+      <%= random_wavy_decorations(20) %>
+      <section class="flex flex-col flex-grow"  style="height: calc(100% - 70px);">
+        <% if @messages.any? %>
+          <section  id="messages" class="flex-grow overflow-y-auto overflow-x-hidden my-3">
+            <% previous_user_name = nil %>
+            <% @messages.order(created_at: :asc).each do |message| %>
+              <% if message.user.name != previous_user_name %>
+                <p class="mt-2 text-xs <%= message.user.name == current_user.name ? 'text-right text-theme-turquoise justify-end' : 'text-theme-grey-400 justify-end w-full' %>  mx-2 mb-0.5"><%= message.user.name %></p>
+              <% end %>
+              <div class="<%= message.user.name == current_user.name ? 'text-right justify-end items-end' : 'text-left items-start justify-start' %> flex flex-col text-xs">
+                <div class="<%= message.user.name == current_user.name ? 'bg-theme-greeny' : 'bg-theme-grey-200' %> my-0.5 rounded-full w-auto px-3 py-2" >
+                  <span><%= message.content %></span>
+                </div>
               </div>
+              <% previous_user_name = message.user.name %>
+            <% end %>
+          </section>
+        <% else %>
+          <section class="flex flex-row flex-grow overflow-auto my-3">
+            <div class="flex-row flex-grow overflow-auto items-center justify-center text-theme-grey-400 italic h-full text-center">
+              <span class="flex items-center justify-center">
+                There are no messages yet. Here's an ice breaker:
+              </span>
+              <ul class="text-xs">
+                  <% ice_breakers = [
+                    "What's your favorite hobby?",
+                    "What's the first thing you do when you wake up in the morning?",
+                    "What's the last movie you watched that made you laugh out loud?",
+                    "If your pet could talk, what do you think it would say to you?",
+                    "What's a book you've read recently that you couldn't put down?",
+                    "Would you rather have the ability to fly or be invisible?",
+                    "Would you rather always be 10 minutes late or always be 20 minutes early?",
+                    "What's the last book you read?",
+                    "What's your dream vacation?", 
+                    "What's your favorite movie?", 
+                    "What's your favorite food?"] %>
+                  <% ice_breakers.sample(1).each do |ice_breaker| %>
+                    <li><%= ice_breaker %></li>
+                  <% end %>
+                </ul>
             </div>
-            <% previous_user_name = message.user.name %>
-          <% end %>
-        </section>
-      <% else %>
-        <section class="flex flex-row flex-grow overflow-auto my-3">
-          <div class="flex-row flex-grow overflow-auto items-center justify-center text-theme-grey-400 italic h-full text-center">
-            <span class="flex items-center justify-center">
-              There are no messages yet. Here's an ice breaker:
-            </span>
-            <ul class="text-xs">
-                <% ice_breakers = [
-                  "What's your favorite hobby?",
-                  "What's the first thing you do when you wake up in the morning?",
-                  "What's the last movie you watched that made you laugh out loud?",
-                  "If your pet could talk, what do you think it would say to you?",
-                  "What's a book you've read recently that you couldn't put down?",
-                  "Would you rather have the ability to fly or be invisible?",
-                  "Would you rather always be 10 minutes late or always be 20 minutes early?",
-                  "What's the last book you read?",
-                  "What's your dream vacation?", 
-                  "What's your favorite movie?", 
-                  "What's your favorite food?"] %>
-                <% ice_breakers.sample(1).each do |ice_breaker| %>
-                  <li><%= ice_breaker %></li>
-                <% end %>
-              </ul>
+          </section>
+        <% end %>
+      <section>
+
+      <%= form_with model: [ @room, Message.new ], local: true do |form| %>
+        <div class="flex flex-row bottom-0 w-full">
+          <div class="mb-4 w-full">
+            <%= form.text_field :content, autofocus: true, class: "appearance-none border-0 rounded-full border-2 border-theme-grey-300 w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:border-theme-greeny focus:border-3", placeholder: "Write a message..." %>
           </div>
-        </section>
-      <% end %>
-    <section>
-
-
-    <%= form_with model: [ @room, Message.new ], local: true do |form| %>
-      <div class="flex flex-row bottom-0 w-full">
-        <div class="mb-4 w-full">
-          <%= form.text_field :content, autofocus: true, class: "appearance-none border-0 rounded-full border-2 border-theme-grey-300 w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:border-theme-greeny focus:border-3", placeholder: "Write a message..." %>
         </div>
-      </div>
+      <% end %>
     <% end %>
+
+
   </section>
 </div> 
 

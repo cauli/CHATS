@@ -11,6 +11,13 @@ class RoomsController < ApplicationController
   # GET /rooms/1 or /rooms/1.json
   def show
     @current_user = current_user
+    @room = Room.find(params[:id])
+    if @room.room_users.exists?(user_id: current_user.id)
+      @messages = @room.messages
+    else
+      @messages = []
+      @needs_to_join = true
+    end
   end
 
   # GET /rooms/new
@@ -63,7 +70,7 @@ class RoomsController < ApplicationController
     @room.destroy!
 
     respond_to do |format|
-      format.html { redirect_to rooms_url, notice: "Room was successfully destroyed." }
+      format.html { redirect_to rooms_url, notice: "💣 Room was successfully destroyed." }
       format.json { head :no_content }
     end
   end
