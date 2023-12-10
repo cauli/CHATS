@@ -16,11 +16,11 @@ module.exports = {
       colors: {
         ...colors,
         theme: {
-          grey: { // all spicy greys have a bit of purple in them
+          grey: {
             100: '#f6f5f7',
-            200: '#ebe9ec',
-            300: '#e0dde2',
-            400: '#d5d2d8',
+            200: '#dbd9dc',
+            300: '#b0adb2',
+            400: '#959298',
             500: '#36333e',
             600: '#2c292f',
             700: '#242025',

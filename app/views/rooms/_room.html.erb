@@ -6,9 +6,9 @@
   <section id="header" class="flex flex-col">
     <div class="flex flex-row items-center w-full">
       <h1 class="<%= tailwind_header_class(:light) %>"><%= room.title %></h1>
-      <div>
-        <button class="text-theme-grey-600 font-bold mt-1 text-2xl px-3" onclick="toggleOptions()">⫶</button>
-        <div id="options" class="fixed bg-white outline divide-y divide-theme-greeny outline-theme-greeny rounded-md shadow-sm" style="display: none;">
+      <div data-controller="toggle">
+        <button class="text-theme-grey-600 font-bold mt-1 text-2xl px-3" data-action="click->toggle#toggle">⫶</button>
+        <div id="options" data-toggle-target="options" class="fixed bg-white outline divide-y divide-theme-greeny outline-theme-greeny rounded-md shadow-sm hidden">
           <%= link_to "Edit this room", edit_room_path(@room), class: "text-theme-grey-500 text-sm py-1 px-2 hover:bg-theme-grey-100 block" %>
           <%= button_to "Destroy this room", @room, method: :delete, class: "text-red-500 text-sm py-1 px-2 hover:bg-theme-grey-100 block" %>
         </div>

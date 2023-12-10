@@ -1,14 +1,12 @@
-
-
 <div class="flex flex-row">
   <div class="flex flex-col w-1/3 mt-24">
     <%= render @room %>
   </div>
 
   <section class="bg-white flex flex-col h-screen px-6 flex-grow border-l-2 border-theme-grey-300">
-    <section class="flex flex-col flex-grow">
+    <section class="flex flex-col flex-grow"  style="height: calc(100% - 50px);">
       <% if @room.messages.any? %>
-        <section class="flex-grow overflow-auto my-3">
+        <section  id="messages" class="flex-grow overflow-auto my-3">
           <% previous_user_name = nil %>
           <% @room.messages.order(created_at: :asc).each do |message| %>
             <% if message.user.name != previous_user_name %>
@@ -23,7 +21,30 @@
           <% end %>
         </section>
       <% else %>
-        <section class="flex-grow overflow-auto">No messages. When someone sends one, it will appear here</section>
+        <section class="flex flex-row flex-grow overflow-auto my-3">
+          <div class="flex-row flex-grow overflow-auto items-center justify-center text-theme-grey-400 italic h-full text-center">
+            <span class="flex items-center justify-center">
+              There are no messages yet. Here's an ice breaker:
+            </span>
+            <ul class="text-xs">
+                <% ice_breakers = [
+                  "What's your favorite hobby?",
+                "What's the first thing you do when you wake up in the morning?",
+                  "What's the last movie you watched that made you laugh out loud?",
+                  "If your pet could talk, what do you think it would say to you?",
+                  "What's a book you've read recently that you couldn't put down?",
+                  "Would you rather have the ability to fly or be invisible?",
+                  "Would you rather always be 10 minutes late or always be 20 minutes early?",
+                  "What's the last book you read?",
+                  "What's your dream vacation?", 
+                  "What's your favorite movie?", 
+                  "What's your favorite food?"] %>
+                <% ice_breakers.sample(1).each do |ice_breaker| %>
+                  <li><%= ice_breaker %></li>
+                <% end %>
+              </ul>
+          </div>
+        </section>
       <% end %>
     <section>
 
@@ -36,16 +57,17 @@
       </div>
     <% end %>
   </section>
-
-
 </div> 
+
+<% if alert %>
+  <div class="fixed bottom-4 left-4 bg-white shadow-lg p-4 rounded-lg text-red-400">
+    <%= alert %>
+  </div>
+<% end %>
+
 <script>
-  function toggleOptions() {
-    var options = document.getElementById("options");
-    if (options.style.display === "none") {
-      options.style.display = "block";
-    } else {
-      options.style.display = "none";
-    }
-  }
+  document.addEventListener("DOMContentLoaded", function() {
+    var element = document.getElementById("messages");
+    element.scrollTop = element.scrollHeight;
+  });
 </script>
